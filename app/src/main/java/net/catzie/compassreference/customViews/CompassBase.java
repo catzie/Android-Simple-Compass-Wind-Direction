@@ -1,7 +1,6 @@
 package net.catzie.compassreference.customViews;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,13 +15,10 @@ public class CompassBase extends View {
 
     private String TAG = "CompassBase";
     private Paint mPaint;
-    private Paint mPaintInnerCircle;
-    private Paint mPaintPointer;
     private int myWidth;
     private int myHeight;
     private int radius;
-    private Bitmap bitmapCanvasInnerCircle;
-    private Canvas canvasInnerCircle;
+
 
 
     public CompassBase(Context context) { // view created in code
@@ -44,13 +40,13 @@ public class CompassBase extends View {
     private void initialize(){
         // Initialize
         mPaint = new Paint();
-//        canvasInnerCircle = new Canvas (bitmapCanvasInnerCircle);
+
     }
 
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh){
-        Log.v(TAG, "onSizeChanged: w=" + w + ", h=" + h + ", oldW=" + oldw + ", oldH=" + oldh);
+
         super.onSizeChanged(w, h, oldw, oldh);
     }
 
@@ -67,7 +63,7 @@ public class CompassBase extends View {
     @Override
     protected void onMeasure(int wMeasureSpec, int hMeasureSpec){
 
-        Log.v(TAG, "onMeasure RAWs: wMeasureSpec=" + wMeasureSpec + ", hMeasureSpec" + wMeasureSpec);
+
 
         /**
          * Set height
@@ -77,26 +73,12 @@ public class CompassBase extends View {
         int hSpecSize = MeasureSpec.getSize(hMeasureSpec);
         myHeight = hSpecSize;
 
-        // if mode is EXACTLY, the view will be placed into an area of exactly that size
-        // EXACTLY is value passed if layout specified specific size of view is asked to fill parent
-
         if(hSpecMode == MeasureSpec.EXACTLY){
-
-            // best practice to simply return hSpecSize (value passed in),
-            // unless that value is below your view's minimum size in which case you should
-            //        return min value and rely on parent layout to crop or scroll as needed
 
             myHeight = hSpecSize;
 
-        }
-
-        // AT_MOST indicates your view can define own siz eup to size given
-        // typically for views set to wrap content
-
-        else if (hSpecMode == MeasureSpec.AT_MOST){
-
-//            myHeight = Math.min(desiredHeight, hSpecSize);
-
+        } else if (hSpecMode == MeasureSpec.AT_MOST){
+            // wrap content
         }
 
         /**
@@ -110,7 +92,7 @@ public class CompassBase extends View {
             myWidth = wSpecSize;
         }
         else if (wSpecMode == MeasureSpec.AT_MOST){
-//            myWidth = Math.min(desiredWidth, wSpecSize);
+            // wrap content
         }
 
         /**
@@ -120,41 +102,13 @@ public class CompassBase extends View {
 
         setMeasuredDimension(myWidth, myHeight); //w and h of circle
 
-        Log.d(TAG, "onMeasre, myWidth="+myWidth+", myHeight="+myHeight);
+
 
     }
 
 
-    /**
-     * Draw our own custom view content
-     * -
-     * Android Canvas is standard canvas API.
-     * Uses a painter's algo (what you paint covers anything beneath it)
-     * -
-     * The android.graphics framework divides drawing into two areas: canvas (what to draw)
-     * and paint (how to draw)
-     * -
-     * Canvas and Paint classes offer variety of brushes and help us draw
-     * and fill lines, boxes, circles and text with colors/patterns/gradient/images
-     * and offers moving, rotation and resizing of canvas
-     * -
-     * The specifics of what you draw are different for every view,
-     * but one thing that's consistent is the resource constraint device you're drawing on,
-     * and that the onDraw method will be called every time the screen is refreshed
-     * potentially many times a second
-     * -
-     * Any object created within onDraw including Pain objects will be created and
-     * destroyed at an alarming frequency. Object creation and descrution can be expensive on Android,
-     * potentially affecting smoothness of UI  when garbage colleciton is initiated
-     * Solution: move the scope of any object used within the onDraw loop into the class scope
-     */
-
     @Override
     protected void onDraw(Canvas canvas){
-
-        // create custom control that can display  wind speed & direction
-        // when done, add to layout using full package name and class name in xml like:
-        // <com.myapp.MyView android:height="..." android:width="..." />
 
         super.onDraw(canvas);
 
@@ -169,13 +123,6 @@ public class CompassBase extends View {
         int radHalf = radius / 2;
         canvas.drawCircle(radHalf, radHalf, radHalf, mPaint);
 
-        // Inner Circle
-/*        mPaint.setStyle(Paint.Style.FILL);
-
-        mPaint.setColor(Color.DKGRAY);
-
-        canvas.drawCircle(radHalf, radHalf, (float) radius/3, mPaint);*/
-
         // Middle Circle
         mPaint.setStyle(Paint.Style.FILL);
 
@@ -186,36 +133,13 @@ public class CompassBase extends View {
 
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(Color.BLACK);
-        mPaint.setTextSize(45);
-        canvas.drawText("N", radius/2.1f, radius/8, mPaint);
-        canvas.drawText("S", radius/2.1f, radius/1.05f, mPaint);
+        mPaint.setTextSize(70);
+        canvas.drawText("N", radius/2.15f, radius/8, mPaint);
+        canvas.drawText("S", radius/2.15f, radius/1.05f, mPaint);
         canvas.drawText("E", radius/1.15f, radius/1.9f, mPaint);
-        canvas.drawText("W", radius/25, radius/1.9f, mPaint);
-
-        // Pointer
-/*
-//        mPaint.setStrokeWidth(4);
-        mPaint.setColor(android.graphics.Color.RED);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setAntiAlias(true);
-        mPaint.setStrokeWidth(10);
-
-        Point a = new Point(0, 0);
-//        Point b = new Point(0, 200);
-        Point c = new Point(radius, radius);
-
-        Path path = new Path();
-        path.setFillType(Path.FillType.EVEN_ODD);
-//        path.lineTo(b.x, b.y);
-        path.moveTo(c.x, c.y);
-        path.lineTo(a.x, a.y);
-        path.close();
-
-//        canvas.rotate(45);
-        canvas.drawPath(path, mPaint);*/
+        canvas.drawText("W", radius/17.8f, radius/1.9f, mPaint);
 
 
-        Log.d(TAG, "radius=" + radius);
 
     }
 
