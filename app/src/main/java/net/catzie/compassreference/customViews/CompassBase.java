@@ -133,7 +133,7 @@ public class CompassBase extends View {
 
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(Color.BLACK);
-        mPaint.setTextSize(70);
+        mPaint.setTextSize(50);
         canvas.drawText("N", radius/2.15f, radius/8, mPaint);
         canvas.drawText("S", radius/2.15f, radius/1.05f, mPaint);
         canvas.drawText("E", radius/1.15f, radius/1.9f, mPaint);

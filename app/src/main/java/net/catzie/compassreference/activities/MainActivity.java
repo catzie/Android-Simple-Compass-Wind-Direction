@@ -21,8 +21,6 @@ public class MainActivity extends AppCompatActivity {
         compassNeedle = (CompassNeedle) findViewById(R.id.compassNeedle);
         numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
 
-
-
         numberPicker.setMinValue(0);
         numberPicker.setMaxValue(360);
 

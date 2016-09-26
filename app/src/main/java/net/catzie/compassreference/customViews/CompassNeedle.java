@@ -125,7 +125,7 @@ public class CompassNeedle extends View {
         // Inner Circle
         mPaint.setStyle(Paint.Style.FILL);
 
-        mPaint.setColor(Color.DKGRAY);
+        mPaint.setColor(Color.GRAY);
 
         canvas.drawCircle(radHalf, radHalf, radHalf, mPaint);
 
@@ -140,7 +140,7 @@ public class CompassNeedle extends View {
         mPaint.setColor(Color.RED);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setAntiAlias(true);
-        mPaint.setStrokeWidth(10);
+        mPaint.setStrokeWidth(6);
 
         Point a = new Point(radHalf, 0);
         Point c = new Point(radHalf, radHalf);
